@@ -1,0 +1,6 @@
+#!/bin/bash
+cd /home/pi/flask-pihole-dashboard
+source venv/bin/activate
+python dynamic_ip_setter.py
+python fetch_ip_from_dhcpcd.py
+flask run --host=0.0.0.0 --port=5000

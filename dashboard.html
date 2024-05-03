@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pi-hole Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background-color: #2c3e50; /* Dark blue color */
+            color: #fff;
+        }
+        .navbar {
+            background-color: #8e44ad; /* Purple color */
+        }
+        .stat-card {
+            background-color: #f1c40f; /* Yellow color for stats */
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-radius: 0.25rem;
+        }
+        .chart-container, .dns-instructions, .configuration-instructions {
+            background-color: #3498db; /* Blue color similar to the picture */
+            padding: 1rem;
+            border-radius: 0.25rem;
+            margin-top: 2rem;
+        }
+        .chart-container {
+            padding: 2rem; /* Additional padding */
+            max-width: 800px; /* Increase width */
+            margin: auto; /* Centering the chart */
+            height: 400px; /* Increasing height for better visibility */
+        }
+        .navbar-brand, .navbar-nav .nav-link {
+            color: #fff;
+        }
+        .btn-primary {
+            background-color: #9b59b6; /* Purple color */
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #8e44ad; /* Darker purple */
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="#">WTower Dashboard</a>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <!-- Stats -->
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <h5>Ads Blocked</h5>
+                    <p>{{ stats.queries_blocked }}</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <h5>Threats Blocked</h5>
+                    <p>{{ stats.domains_blocked }}</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <h5>Total Queries</h5>
+                    <p>{{ stats.total_queries }}</p>
+                </div>
+            </div>
+
+            <!-- DNS Configuration IP Display -->
+            <div class="col-md-12">
+                <div class="dns-instructions">
+                    <h4>DNS Configuration</h4>
+                    <p>To use Pi-hole, set your device's DNS to the IP shown below:</p>
+                    <p><strong>{{ ip_address }}</strong></p>
+                </div>
+            </div>
+
+            <!-- 24-Hour Activity Graph -->
+            <div class="col-md-12 mt-5">
+                <div class="chart-container">
+                    <h4>24-Hour Activity</h4>
+                    <canvas id="activityChart"></canvas>
+                </div>
+            </div>
+
+            <!-- DNS Configuration Instructions -->
+            <div class="col-md-12">
+                <div class="configuration-instructions">
+                    <h4>How to Configure Your Device</h4>
+                    <p>
+                        <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#deviceConfig" aria-expanded="false" aria-controls="deviceConfig">
+                            Show Configuration Steps
+                        </button>
+                    </p>
+                    <div class="collapse" id="deviceConfig">
+                        <div>
+                            <h5>iPhone</h5>
+                             <p> 1. Open Settings: Go to your iPhone's home screen and tap on the "Settings" icon.</p>
+ <p> 2. Wi-Fi: Tap on "Wi-Fi" and connect to a Wi-Fi network if you aren't connected to one.</p>
+ <p> 3. Network Details: Tap the information (i) icon next to the Wi-Fi network you are connected to.</p>
+ <p> 4. Configure DNS: Tap on "Configure DNS", then select "Manual".
+ <p> 5. Add DNS Server: Tap "Add Server", then enter the DNS server displayed above.</p>
